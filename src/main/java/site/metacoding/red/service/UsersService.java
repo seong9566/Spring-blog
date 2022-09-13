@@ -7,9 +7,9 @@ import lombok.RequiredArgsConstructor;
 import site.metacoding.red.domain.boards.BoardsDao;
 import site.metacoding.red.domain.users.Users;
 import site.metacoding.red.domain.users.UsersDao;
-import site.metacoding.red.web.request.users.JoinDto;
-import site.metacoding.red.web.request.users.LoginDto;
-import site.metacoding.red.web.request.users.UpdateDto;
+import site.metacoding.red.web.dto.request.users.JoinDto;
+import site.metacoding.red.web.dto.request.users.LoginDto;
+import site.metacoding.red.web.dto.request.users.UpdateDto;
 
 @RequiredArgsConstructor
 @Service

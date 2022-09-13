@@ -2,8 +2,6 @@ package site.metacoding.red.domain.users;
 
 import java.util.List;
 
-import site.metacoding.red.web.request.users.LoginDto;
-
 
 public interface UsersDao {
 	public void join(Users users);

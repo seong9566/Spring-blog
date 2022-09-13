@@ -1,4 +1,4 @@
-package site.metacoding.red.web.request.users;
+package site.metacoding.red.web.dto.request.users;
 
 import lombok.Getter;
 
