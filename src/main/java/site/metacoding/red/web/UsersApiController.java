@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import site.metacoding.red.domain.users.Users;
 import site.metacoding.red.service.UsersService;
-import site.metacoding.red.web.request.users.InsertDto;
+import site.metacoding.red.web.request.users.JoinDto;
 import site.metacoding.red.web.request.users.LoginDto;
 import site.metacoding.red.web.request.users.UpdateDto;
 
@@ -21,13 +21,13 @@ public class UsersApiController {
 	private final UsersService usersService;
 	
 	
-	@PostMapping("/users/insert")
-	public String insert(InsertDto insertDto) {
-		usersService.회원가입(insertDto);
+	@PostMapping("/api/users/insert")
+	public String insert(JoinDto joinDto) {
+		usersService.회원가입(joinDto);
 		return "회원가입 완료";
 		}
 	
-	@PostMapping("/users/login")
+	@PostMapping("/api/users/login")
 	public String login(LoginDto loginDto) {
 		Users usersPS = usersService.로그인(loginDto);
 		if(usersPS == null) {
@@ -43,26 +43,26 @@ public class UsersApiController {
 		return usersService.회원정보보기(id);
 	}
 
-	@PutMapping("/users/update/{id}")
+	@PutMapping("/api/users/update/{id}")
 	public String update(@PathVariable Integer id, UpdateDto updateDto) {
 		usersService.회원수정(id, updateDto);
 		return "회원수정완료";
 	}
 
-	@DeleteMapping("/users/delete/{id}")
+	@DeleteMapping("/api/users/delete/{id}")
 	public String delete(@PathVariable Integer id) {
 		usersService.회원탈퇴(id);
 		return "회원탈퇴완료";
 	}
 
-	// localhost:8000/api/users/usernameSameCheck?username=?
-	@GetMapping("/users/usernameCheck")
+	// localhost:8000/api/users/usernameCheck?username=?
+	@GetMapping("/api/users/usernameCheck")
 	public String usernameSameCheck(String username) {
 		boolean isSame = usersService.아이디중복확인(username);
 		if(isSame) {
-			return "유저네임이 중복되었어요";
+			return "유저네임이 중복";
 		}else {
-			return "유저네임이 중복되지 않았어요";
+			return "유저네임이 중복이 되지않았어요";
 		}
 	}
 

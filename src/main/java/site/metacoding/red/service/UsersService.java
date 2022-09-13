@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import site.metacoding.red.domain.boards.BoardsDao;
 import site.metacoding.red.domain.users.Users;
 import site.metacoding.red.domain.users.UsersDao;
-import site.metacoding.red.web.request.users.InsertDto;
+import site.metacoding.red.web.request.users.JoinDto;
 import site.metacoding.red.web.request.users.LoginDto;
 import site.metacoding.red.web.request.users.UpdateDto;
 
@@ -17,11 +17,11 @@ public class UsersService {
 	private final UsersDao usersDao;
 	private final BoardsDao boardsDao;
 	
-	public void 회원가입(InsertDto insertDto) { // username, password, email -> id,creatAt은 받지 않으므로 Dto만들어서 넘겨준다.
+	public void 회원가입(JoinDto joinDto) { // username, password, email -> id,creatAt은 받지 않으므로 Dto만들어서 넘겨준다.
 		// 클라이언트가 Dto를 요청 -> Service에서 Entity로 바꾸어 수행
 		// 1. Dto를 엔티티로 변경하는 코드
 		// 2. 엔티티로 insert 
-		usersDao.insert(insertDto.toEntity());
+		usersDao.join(joinDto.toEntity());
 	}
 	
 	public Users 로그인(LoginDto loginDto) {// Dto username, password

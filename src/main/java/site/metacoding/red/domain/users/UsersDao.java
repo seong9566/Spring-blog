@@ -6,7 +6,7 @@ import site.metacoding.red.web.request.users.LoginDto;
 
 
 public interface UsersDao {
-	public void insert(Users users);
+	public void join(Users users);
 	public List<Users> findAll();
 	public Users findById(Integer id);
 	public void update(Users users);

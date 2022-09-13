@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="site.metacoding.red.domain.users.UsersDao">
 	
-	<insert id="insert">
+	<insert id="join">
 		INSERT INTO users(username, password, email, createdAt) 
 		VALUES(#{username}, #{password}, #{email}, now());
 	</insert>
