@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import site.metacoding.red.domain.boards.Boards;
 import site.metacoding.red.domain.boards.BoardsDao;
 import site.metacoding.red.domain.users.Users;
+import site.metacoding.red.domain.users.UsersDao;
 import site.metacoding.red.web.dto.request.boards.UpdateDto;
 import site.metacoding.red.web.dto.request.boards.WriteDto;
 import site.metacoding.red.web.dto.response.boards.MainDto;
@@ -18,6 +19,7 @@ import site.metacoding.red.web.dto.response.boards.PagingDto;
 public class BoardsService {
 	
 	private final BoardsDao boardsDao;
+	private final UsersDao usersDao;
 	
 	public PagingDto 게시글목록보기(Integer page, String keyword) {
 		if (page == null) {
@@ -33,6 +35,7 @@ public class BoardsService {
 
 		return pagingDto;
 	}
+	
 	public Boards 게시글상세보기(Integer id) {
 		Boards boards = boardsDao.findById(id);
 		return boards;

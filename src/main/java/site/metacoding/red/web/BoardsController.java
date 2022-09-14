@@ -57,7 +57,7 @@ public class BoardsController {
 	}
 	
 	//게시글 수정하기 폼으로 이동
-	@GetMapping("/boards/{id}")
+	@GetMapping("/boards/{id}/updateForm")
 	public String updateForm(@PathVariable Integer id,Model model) {
 		Boards boardsPS = boardsService.게시글상세보기(id);
 		model.addAttribute("boards",boardsPS);
