@@ -2,8 +2,6 @@ package site.metacoding.red.web;
 
 import javax.servlet.http.HttpSession;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,10 +26,6 @@ public class BoardsApiController {
    private final BoardsService boardsService;
    private final UsersService usersService;
    
-   /***
-    * 
-    *     인증과 권한 체크는 지금 하지 마세요!!
-    */
    
    @PutMapping("/api/boards/{id}")
    public String update(@PathVariable Integer id, UpdateDto updateDto) {
