@@ -41,14 +41,14 @@ public class UsersService {
 	}
 
 
-	public void 회원수정(Integer id, UpdateDto updateDto) {// id, 디티오(password, email)
+	public Users 회원수정(Integer id, UpdateDto updateDto) {// id, 디티오(password, email)
 		// 1. 영속화 
 		Users usersPS = usersDao.findById(id);
 		// 2. 영속화 된 객체 변경
 		usersPS.updatePasswordEmail(updateDto);
 		// 3. DB 수행 update
 		usersDao.update(usersPS);
-		
+		return usersPS;
 	} 
 	/*
 	 *   1. deleteById가 실행 할 때 트랜잭션이 실행된다

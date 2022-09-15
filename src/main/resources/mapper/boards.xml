@@ -61,5 +61,7 @@
 	<delete id="deleteById">
 		DELETE FROM boards WHERE id = #{id}
 	</delete>
-
+	<update id="updateByUsersId">
+		UPDATE boards SET usersId = null WHERE usersId = #{usersId}
+	</update>
 </mapper>

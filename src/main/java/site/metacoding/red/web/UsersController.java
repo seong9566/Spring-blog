@@ -77,17 +77,18 @@ public class UsersController {
 	}
 	
 	@PutMapping("/users/{id}")
-	public String update(@PathVariable Integer id, UpdateDto updateDto) {
-		usersService.회원수정(id, updateDto);
-		// 메세지를 뿌리면서 가고 싶다면 @ResponseBody를 넣어주면 된다. 
-		return "redirect:/users/"+id;
+	public @ResponseBody CMRespDto<?> update(@PathVariable Integer id, @RequestBody UpdateDto updateDto) {
+		Users usersPS = usersService.회원수정(id, updateDto);
+		session.setAttribute("principal", usersPS);// 세션 동기화 
+		return new CMRespDto<>(1, "회원 수정 성공", null);
 	}
 	
 	// 회원 탈퇴는 updateForm 아래에 버튼을 만들기 
 	@DeleteMapping("/users/{id}")
-	public @ResponseBody String delete(@PathVariable Integer id) {
+	public @ResponseBody CMRespDto<?> delete(@PathVariable Integer id) {
 		usersService.회원탈퇴(id);
-		return Script.href("/loginForm","회원탈퇴가 완료 되었습니다.");
+		session.invalidate(); // 세션 초기화 
+		return new CMRespDto<>(1, "회원 탈퇴 성공", null);
 	}
 	
 	@GetMapping("/logout")
