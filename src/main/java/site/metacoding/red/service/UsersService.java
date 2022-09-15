@@ -27,12 +27,17 @@ public class UsersService {
 	public Users 로그인(LoginDto loginDto) {// Dto username, password
 		
 		Users usersPS = usersDao.findByUsername(loginDto.getUsername());
+		if(usersPS == null) {
+			return null;
+		}
 		
 		// 1. if로 usersPs의 password와 Dto password 비교
 		if(usersPS.getPassword().equals(loginDto.getPassword())) {
 			return usersPS;
 		}
+		else {
 		return null;
+		}
 	}
 
 

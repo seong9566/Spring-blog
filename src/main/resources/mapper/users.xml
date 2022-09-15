@@ -29,4 +29,8 @@
 	<select id="findByUsername" resultType="site.metacoding.red.domain.users.Users">
 		SELECT * FROM users WHERE username = #{username}
 	</select>
+	<update id="updateByUsersId">
+		UPDATE boards SET usersId = null WHERE usersId =
+		#{usersId}
+	</update>
 </mapper>

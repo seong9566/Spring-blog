@@ -59,13 +59,13 @@ public class UsersController {
 	}
 	
 	@PostMapping("/login")
-	public @ResponseBody String join(LoginDto loginDto) {
+	public @ResponseBody CMRespDto<?> login(@RequestBody LoginDto loginDto) {
 		Users principal = usersService.로그인(loginDto);
 		if(principal == null) {
-			return Script.back("아이디 혹은 비밀번호가 틀렸습니다.");
+			return new CMRespDto<>(-1, "로그인 실패", null);
 		}
 		session.setAttribute("principal", principal);
-		return Script.href("/");
+		return new CMRespDto<>(1, "로그인 성공", null);
 	}
 	
 	@GetMapping("/users/{id}")

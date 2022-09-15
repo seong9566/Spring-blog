@@ -7,7 +7,6 @@ import lombok.Setter;
 
 //유저네임 중복 확인을 위한 클래스 
 @AllArgsConstructor
-@NoArgsConstructor
 @Getter
 public class CMRespDto<T> {
 	private Integer code; // 1. 정상 , -1 실패

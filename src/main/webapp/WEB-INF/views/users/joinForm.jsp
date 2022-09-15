@@ -44,7 +44,7 @@
 			}
 		}).done((res)=>{
 			if(res.code ==1){// 회원가입 성공 하면 main 페이지로 이동 
-				location.href = "/";
+				location.href = "/loginForm";
 			}
 		});
 	});
