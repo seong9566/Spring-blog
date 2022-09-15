@@ -10,6 +10,8 @@
 		</div>
 		<div class="mb-3">
 			<input id="password"type="password" class="form-control" placeholder="Enter password">
+			<input id="passwordCheck"type="password" class="form-control" placeholder="Onemore password">
+			<button id= "btnPasswordCheck"class = "btn btn-warning" type="button">password 체크</button>
 		</div>
 		<div class="mb-3">
 			<input id="email"type="email" class="form-control" placeholder="Enter email">
@@ -19,16 +21,34 @@
 </div>
 
 <script>
-
 	// isUsername이 false일 경우만 회원가입 가능 하기 위한 변수 
 	let isUsernameSameCheck = false;
+	// isPasswordCheck를 진행 하지 않으면 회원가입 불가능
+	let isPasswordCheck = false;
 	
+	$("#btnPasswordCheck").click(()=>{
+		let passwordCheck = $("#passwordCheck").val();
+		let password = $("#password").val();
+		if(password == passwordCheck){
+			alert("패스워드가 일치합니다");
+			isPasswordCheck = true;
+		}
+		else{
+			alert("패스워드가 일치하지 않습니다.");
+			return;
+		}
+	});
 	//회원가입
 	$("#btnJoin").click(()=>{
 		if(isUsernameSameCheck == false){
 			alert("유저네임 중복 체크를 진행 해주세요");
 			return;
 		}
+		if(isPasswordCheck == false){
+			alert("비밀번호 체크를 진행 해주세요.");
+			return;
+		}
+		
 		//0. 통신 오브젝트 생성
 		let data ={
 				username : $("#username").val(),
@@ -51,18 +71,7 @@
 	
 	//유저네임 중복체크 
 	$("#btnUserNameSameCheck").click(()=>{
-		//0. 통신 오브젝트 생성
-		// JSON은 body데이터를 날리기 위해 필요 하다. 
-		// let body = { //(Get 요청은 body가 없기 때문에 통신 오브젝트가 필요가 없다.)
-		// username :$("#inputUserName").val();
-		// }
-		//1. 사용자가 적은 username 값을 가져온다.(inputUserName 가져옴) 
 		let username = $("#username").val();
-
-		//2. Ajax 통신 
-		 //(POST,GET은 Form태그에서 가능하다, PUT,DELETE가 불가능 하기때문에 AJAX를 사용한다.)
-		 // 앞으로 코드의 통일을 위해 AJAX를 사용한다. 
-		//function의 this와 람다식의 this가 서로 다른 스코프를 사용한다. 
 		$.ajax("users/usernameSameCheck?username="+username,{// ``백틱을 사용은 하면 EL표현식으로 인식 하기 때문에 백틱 X
 			type:"GET",
 			dataType: "json", // 아무것도 적지 않으면 default는 json이다
@@ -85,7 +94,6 @@
 		}); // ajax함수로 통신 시작 done()은 응답
 		
 	});
-
 </script>
 <%@ include file="../layout/footer.jsp"%>
 
