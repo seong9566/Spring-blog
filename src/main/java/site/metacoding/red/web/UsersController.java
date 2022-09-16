@@ -1,5 +1,10 @@
 package site.metacoding.red.web;
 
+import java.net.http.HttpRequest;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -48,7 +53,17 @@ public class UsersController {
 	}
 
 	@GetMapping("/loginForm")
-	public String loginForm() { // 쿠키 배워보기
+	public String loginForm(Model model,HttpServletRequest request) { // 쿠키 가져가기
+		Cookie[] cookies = request.getCookies();
+		for(Cookie cookie : cookies) {
+			if(cookie.getName().equals("username")) {
+				model.addAttribute(cookie.getName(),cookie.getValue());
+			}
+			System.out.println("==================");
+			System.out.println(cookie.getName()); 
+			System.out.println(cookie.getValue());
+			System.out.println("==================");
+		}
 		return "users/loginForm";
 	}
 
@@ -59,7 +74,27 @@ public class UsersController {
 	}
 	
 	@PostMapping("/login")
-	public @ResponseBody CMRespDto<?> login(@RequestBody LoginDto loginDto) {
+	public @ResponseBody CMRespDto<?> login(@RequestBody LoginDto loginDto,HttpServletResponse response ) {
+		
+//		System.out.println("====================");
+//		System.out.println(loginDto.isRemember());
+//		System.out.println("====================");
+		
+		// 직접 쿠키에 set으로 담아주는것은 기존의 쿠키를 날려버릴 수 있기 때문에 객체를 하나 생성해 뒤에 더해주는 방법을 사용한다. 
+		if(loginDto.isRemember()) {
+			// 쿠키 생성 
+			Cookie cookie = new Cookie("username",loginDto.getUsername());
+			cookie.setMaxAge(60*60*24);// 60초,60분 , 24시간 = 1일
+			response.addCookie(cookie);
+			//response.setHeader("Set-Cookie","username="+loginDto.getUsername()+";HttpOnly");
+		}
+		else {
+			//쿠키 삭제 
+			Cookie cookie = new Cookie("username", null);
+			cookie.setMaxAge(0);
+			response.addCookie(cookie);
+		}
+		
 		Users principal = usersService.로그인(loginDto);
 		if(principal == null) {
 			return new CMRespDto<>(-1, "로그인 실패", null);

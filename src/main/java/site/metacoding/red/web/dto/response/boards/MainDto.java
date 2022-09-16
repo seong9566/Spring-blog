@@ -9,5 +9,8 @@ public class MainDto {
 	private Integer id;
 	private String title;
 	private String username;
-
+	
+//	public String getUsername() {
+//		return username == null ? "익명" : username;
+//	}
 }

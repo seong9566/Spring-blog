@@ -5,7 +5,7 @@
 <div class="container">
 	<form>
 		<div class="mb-3 mt-3">
-			<input id = "username"type="text" class="form-control" placeholder="Enter username">
+			<input id = "username"type="text" class="form-control" placeholder="Enter username" >
 			<button id= "btnUserNameSameCheck"class = "btn btn-warning" type="button">UserName 중복 체크</button>
 		</div>
 		<div class="mb-3">

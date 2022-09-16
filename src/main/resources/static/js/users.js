@@ -1,5 +1,8 @@
 /**
- * 
+ * 쿠키는 자바스크립으로 접근 불가능, 자기 자신의 영역(브라우저 영역)
+ 브라우저에 저장  -> 쿠키 (브라우저가 꺼지면 날라간다)
+ 서버에 저장 -> 세션 (서버가 꺼지면 세션이 날라간다)
+ 조금 더 영구적인 저장 -> DB(영구적인 저장영역)
  */
 
 let isUsernameSameCheck = false;
@@ -24,6 +27,7 @@ $("#btnUserNameSameCheck").click(() => {
 // 로그인
 $("#btnLogin").click(() => {
 	login();
+
 });
 
 // 회원 삭제
@@ -103,11 +107,13 @@ function checkUserName(){
 	}); 
 }
 
+
 //로그인
 function login(){
 		let data = {
 		username: $("#username").val(),
-		password: $("#password").val()
+		password: $("#password").val(),
+		remember: $("#remember").prop("checked")
 	};
 
 	$.ajax("/login", {

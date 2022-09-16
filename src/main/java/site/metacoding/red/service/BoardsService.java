@@ -25,7 +25,7 @@ public class BoardsService {
 		if (page == null) {
 			page = 0;
 		}
-		int startNum = page * 3; // 게시글 수 
+		int startNum = page * 5; // 게시글 수 
 		List<MainDto> boardsList = boardsDao.findAll(startNum, keyword);
 		PagingDto pagingDto = boardsDao.paging(page, keyword);
 		if (boardsList.size() == 0)
