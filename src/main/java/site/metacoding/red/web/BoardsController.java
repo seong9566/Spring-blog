@@ -29,9 +29,6 @@ public class BoardsController {
 	public String getBoards(Model model,Integer page, String keyword) {
 		PagingDto pagingDto = boardsService.게시글목록보기(page, keyword);
 		model.addAttribute("pagingDto", pagingDto);
-		System.out.println("========================");
-		System.out.println(pagingDto.getMainDtos());
-		System.out.println("========================");
 		return "/boards/main";
 	}
 	
