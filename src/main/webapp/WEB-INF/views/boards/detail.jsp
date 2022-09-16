@@ -32,10 +32,12 @@
 		if(check == true){
 			$("#iconHeart").removeClass("fa-regular");
 			$("#iconHeart").addClass("fa-solid");
+			$("#iconHeart").css("color", "red");
 		}
 		else{
 			$("#iconHeart").removeClass("fa-solid");
 			$("#iconHeart").addClass("fa-regular");
+			$("#iconHeart").css("color", "black");
 		}
 	});
 </script>
