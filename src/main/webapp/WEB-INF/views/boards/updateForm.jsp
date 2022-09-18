@@ -4,15 +4,29 @@
 
 <div class="container">
 	<form>
+		<input id="id" type="hidden" value="${boards.id}">
 		<div class="mb-3 mt-3">
-			<input type="text" class="form-control" placeholder="Enter title" value="제목입니다">
+			<input id="title" type="text" class="form-control" placeholder="Enter title"
+				value="${boards.title}">
 		</div>
 		<div class="mb-3">
-			<textarea class="form-control" rows="8" >내용입니다</textarea>
+			<textarea id="content" class="form-control" rows="8">${boards.content}</textarea>
 		</div>
-		<button type="submit" class="btn btn-primary">수정완료</button>
+		<button id="btnUpdate" type="button" class="btn btn-primary">수정완료</button>
 	</form>
 </div>
+
+<script src="/js/boards.js"></script>
+
+<script>
+	$("#title").css({
+		width : 600
+	});
+
+	$('#content').summernote({
+		height : 400
+	});
+</script>
 
 <%@ include file="../layout/footer.jsp"%>
 
