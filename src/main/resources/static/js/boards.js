@@ -2,27 +2,21 @@
  * 
  */
 
-//좋아요 클릭 
-$("#iconHeart").click((event) => { // event를 쓰면 클릭된 부분의 정보를 가져옴
-	let check = $("#iconHeart").hasClass("fa-regular");
-
-	if (check == true) {
-		$("#iconHeart").removeClass("fa-regular");
-		$("#iconHeart").addClass("fa-solid");
-		$("#iconHeart").css("color", "red");
-	}
-	else {
-		$("#iconHeart").removeClass("fa-solid");
-		$("#iconHeart").addClass("fa-regular");
-		$("#iconHeart").css("color", "black");
-	}
-});
-
 
 
 //삭제
 $("#btnDelete").click(() => {
-	let id = $("#id").val();
+ deleteBoard();
+});
+
+//수정
+$("#btnUpdate").click(() => {
+	updateBoard();
+});
+
+// =====================함수 ==================
+function deleteBoard(){
+		let id = $("#id").val();
 
 	$.ajax("/boards/" + id, {
 		type: "DELETE",
@@ -36,11 +30,9 @@ $("#btnDelete").click(() => {
 			alert("게시글 삭제 실패");
 		}
 	});
-});
-
-//수정
-$("#btnUpdate").click(() => {
-	let id = $("#id").val();
+}
+function updateBoard(){
+		let id = $("#id").val();
 
 	let data = {
 		title: $("#title").val(),
@@ -65,4 +57,4 @@ $("#btnUpdate").click(() => {
 
 		}
 	});
-});
+}
