@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 import site.metacoding.red.domain.boards.Boards;
+import site.metacoding.red.domain.loves.Loves;
 import site.metacoding.red.domain.users.Users;
 import site.metacoding.red.service.BoardsService;
 import site.metacoding.red.web.dto.request.boards.UpdateDto;
@@ -30,6 +31,14 @@ public class BoardsController {
 	private final BoardsService boardsService;
 	private final HttpSession session;
 
+	@PostMapping("/boards/{id}/loves")
+	public @ResponseBody CMRespDto<?> insertLoves(@PathVariable Integer id){
+		Users principal = (Users) session.getAttribute("principal");
+		Loves loves = new Loves(principal.getId(), id);
+		boardsService.좋아요(loves);
+		return new CMRespDto<>(1, "좋아요 성공", null);
+	}
+	
 	//게시글 목록 보기
 	@GetMapping({"/","/boards"})
 	public String getBoards(Model model,Integer page, String keyword) {
@@ -58,21 +67,23 @@ public class BoardsController {
 		boardsService.게시글쓰기(writeDto, usersPS);
 		return new CMRespDto<>(1, "글쓰기 성공", null);
 	}
-	
-	// 게시글 상세보기 
-	@GetMapping("boards/{id}")
-	public String getBoardsDetail(@PathVariable Integer id,Model model) {
-		model.addAttribute("boards", boardsService.게시글상세보기(id));
-		return "/boards/detail";
+	@GetMapping("/boards/{id}")
+	public String getBoardDetail(@PathVariable Integer id, Model model) {
+		Users principal = (Users) session.getAttribute("principal");
+		if(principal == null) {
+			model.addAttribute("detailDto", boardsService.게시글상세보기(id, 0));
+		}else {
+			model.addAttribute("detailDto", boardsService.게시글상세보기(id, principal.getId()));
+		}
+		
+		return "boards/detail";
 	}
 	
-	//게시글 수정하기 폼으로 이동
 	@GetMapping("/boards/{id}/updateForm")
-	public String updateForm(@PathVariable Integer id,Model model) {
-		Boards boardsPS = boardsService.게시글상세보기(id);
-		model.addAttribute("boards",boardsPS);
+	public String updateForm(@PathVariable Integer id, Model model) {
+		Boards boardsPS = boardsService.게시글수정화면데이터가져오기(id);
+		model.addAttribute("boards", boardsPS);
 		return "boards/updateForm";
-		
 	}
 	//게시글 수정하기
 	@PutMapping("/boards/{id}")
