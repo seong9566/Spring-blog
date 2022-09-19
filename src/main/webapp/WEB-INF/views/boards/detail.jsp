@@ -2,7 +2,8 @@
 <%@ include file="../layout/header.jsp"%>
 <div class="container">
 	<br />
-	
+		<input id ="page" type = "hidden" value="${sessionScope.referer.page}">
+	<input id = "keyword" type = "hidden" value="${sessionScope.referer.keyword}">
 	<div class="d-flex">
 		<input id="id" type="hidden" value="${boards.id}">
 			<form>

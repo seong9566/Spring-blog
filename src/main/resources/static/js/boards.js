@@ -17,14 +17,15 @@ $("#btnUpdate").click(() => {
 // =====================함수 ==================
 function deleteBoard(){
 		let id = $("#id").val();
-
+		let page = $("#page").val();
+		let keyword = $("#keyword").val();
+		
 	$.ajax("/boards/" + id, {
 		type: "DELETE",
 		dataType: "json"
 	}).done((res) => {
 		if (res.code == 1) {
-			alert("게시글 삭제 성공");
-			location.href = "/";
+			location.href = "/?page="+page+"&keyword="+keyword; //?page=?&keyword=?
 		}
 		else {
 			alert("게시글 삭제 실패");
