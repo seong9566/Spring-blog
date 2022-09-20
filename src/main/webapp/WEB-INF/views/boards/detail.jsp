@@ -8,7 +8,7 @@
 			value="${detailDto.lovesId }" />
 		<c:if test="${!empty sessionScope.principal}">
 			<form>
-				<a href="/s/api/boards/${detailDto.id}/updateForm" class="btn btn-warning">수정하러가기</a>
+				<a href="/s/boards/${detailDto.id}/updateForm" class="btn btn-warning">수정하러가기</a>
 			</form>
 			<form>
 				<button id="btnDelete" type="button" class="btn btn-outline-danger">삭제</button>
