@@ -24,12 +24,13 @@ public class BoardsService {
 	private final BoardsDao boardsDao;
 	private final LovesDao lovesDao;
 
-	public void 좋아요(Loves loves) {
+	public Loves 좋아요(Loves loves) {
 		lovesDao.insert(loves);
+		return loves;
 	}
-
-	public void 좋아요취소(Integer id) {
-
+// 2개 이상은 트랜젝션 
+	public void 좋아요취소(Integer lovesId) {
+		lovesDao.deleteById(lovesId);
 	}
 
 	public PagingDto 게시글목록보기(Integer page, String keyword) {
@@ -48,15 +49,7 @@ public class BoardsService {
 	}
 
 	public DetailDto 게시글상세보기(Integer id, Integer principalId) {
-		System.out.println("게시글 id : " + id);
-		Boards boardsPS = boardsDao.findById(id);
-		LovesDto lovesDto = lovesDao.findByBoardsId(id, principalId);
-		if (lovesDto == null) {
-			lovesDto = new LovesDto();
-			lovesDto.setCount(0);
-			lovesDto.setLoved(false);
-		}
-		return new DetailDto(boardsPS, lovesDto);
+		return boardsDao.findByDetail(id, principalId);
 	}
 
 	public void 게시글수정하기(Integer id, UpdateDto updateDto) {// Integet id, Dto

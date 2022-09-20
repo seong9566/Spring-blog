@@ -5,23 +5,24 @@
 		<input id ="page" type = "hidden" value="${sessionScope.referer.page}">
 	<input id = "keyword" type = "hidden" value="${sessionScope.referer.keyword}">
 	<div class="d-flex">
-		<input id="id" type="hidden" value="${detailDto.boards.id}" />
+		<input id="id" type="hidden" value="${detailDto.id}" />
+		<input id = "lovesId" type="hidden" value="${detailDto.lovesId }"/>
 			<form>
-				<a href="/boards/${detailDto.boards.id}/updateForm" class="btn btn-warning">수정하러가기</a>
+				<a href="/boards/${detailDto.id}/updateForm" class="btn btn-warning">수정하러가기</a>
 			</form>
 			<form>
 				<button id ="btnDelete" type="button"class="btn btn-outline-danger">삭제</button>
 			</form>
 		</div>
 	<div class="d-flex justify-content-between">
-		<h3>${detailDto.boards.title}</h3>
+		<h3>${detailDto.title}</h3>
 		<div>
-			좋아요수 : <span id="countLove">${detailDto.lovesDto.count}</span> 
-			<i id="iconLove" class='${detailDto.lovesDto.loved ? "fa-solid" : "fa-regular"} fa-heart my_pointer my_red'></i>
+			좋아요수 : <span id="countLove">${detailDto.loveCount}</span> 
+			<i id="iconLove" class='${detailDto.loved ? "fa-solid" : "fa-regular"} fa-heart my_pointer my_red'></i>
 		</div>
 	</div>
 	<hr/>
-	<div>${detailDto.boards.content}</div>
+	<div>${detailDto.content}</div>
 </div>
 <script>
 
@@ -71,7 +72,8 @@ function insertLove(){
 			// 좋아요 수 1 증가
 			let count = $("#countLove").text();
 			$("#countLove").text(Number(count)+1);
-			alert(count);
+			$("#lovesId").val(res.data.id);
+			//console.log(res);
 		}else{
 			alert("좋아요 실패했습니다");
 		}
@@ -79,9 +81,23 @@ function insertLove(){
 }
 
 // DB에 delete 요청하기
-function deleteLove(isLovedState){
-	
-}
+function deleteLove(){
+      let id = $("#id").val();
+      let lovesId = $("#lovesId").val();
+      
+      $.ajax("/boards/"+id+"/loves/"+lovesId, {
+         type: "DELETE",
+         dataType: "json"
+      }).done((res) => {
+         if (res.code == 1) {
+            renderCancelLoves();
+            let count = $("#countLove").text(); // 좋아요 갯수를 가져온다.
+            $("#countLove").text(Number(count)-1); // -1해줌. -> 통신이 성공하고 해야 함.
+         }else{
+            alert("좋아요 취소에 실패했습니다");
+         }
+      });
+   }
 
 // 빨간색 하트 그리기
 function renderLoves(){

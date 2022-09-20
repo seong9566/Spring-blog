@@ -9,7 +9,8 @@
 		SELECT totalCount,
 		totalPage,
 		currentPage,
-		if(currentPage = 0, 1, 0) first,
+		if(currentPage = 0, 1, 0)
+		first,
 		if(currentPage = totalPage-1, 1, 0) last
 		FROM
 		(
@@ -39,7 +40,8 @@
 
 	<select id="findAll"
 		resultType="site.metacoding.red.web.dto.response.boards.MainDto">
-		SELECT b.id, b.title,if(u.username IS NULL, '익명',u.username)AS username 
+		SELECT b.id, b.title,if(u.username IS NULL, '익명',u.username)AS
+		username
 		FROM boards b
 		LEFT OUTER JOIN
 		users u
@@ -62,6 +64,21 @@
 		DELETE FROM boards WHERE id = #{id}
 	</delete>
 	<update id="updateByUsersId">
-		UPDATE boards SET usersId = null WHERE usersId = #{usersId}
+		UPDATE boards SET usersId = null WHERE usersId =
+		#{usersId}
 	</update>
+	<select id="findByDetail"
+		resultType="site.metacoding.red.web.dto.response.boards.DetailDto">
+		SELECT
+		b.*,
+		(SELECT id FROM loves WHERE usersId =
+		#{principalId} AND boardsId = #{boardsId}) lovesId,
+		(SELECT 1 FROM
+		loves WHERE usersId = #{principalId} AND boardsId = #{boardsId})
+		isLoved,
+		(SELECT COUNT(*) FROM loves WHERE boardsId = #{boardsId})
+		loveCount
+		FROM boards b
+		WHERE b.id = #{boardsId}
+	</select>
 </mapper>
