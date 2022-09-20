@@ -1,6 +1,7 @@
 package site.metacoding.red.web;
 
 import java.util.HashMap;
+
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 import site.metacoding.red.domain.boards.Boards;
+import site.metacoding.red.domain.loves.Loves;
 import site.metacoding.red.domain.users.Users;
 import site.metacoding.red.service.BoardsService;
 import site.metacoding.red.web.dto.request.boards.UpdateDto;
@@ -30,6 +32,20 @@ public class BoardsController {
 	private final BoardsService boardsService;
 	private final HttpSession session;
 
+	@PostMapping("boards/{id}/loves")//누가 어떤 게시글을 좋아요 하는지 알아야함, -> boards의 id는 주소값으로 받음
+	public @ResponseBody CMRespDto<?> insertLoves(@PathVariable Integer id){
+		Users principal = (Users) session.getAttribute("principal");
+		Loves loves = new Loves(principal.getId(), id);//Loves는 usersId와 boards의 id가 필요함.
+		boardsService.좋아요(loves);
+		return new CMRespDto<>(1, "좋아요 성공", loves);//좋아요 취소 할때 PK값을 위해 loves를 누를때 바로 응답객체에 넣어줌.
+	}
+	
+	@DeleteMapping("/boards/{id}/loves/{lovesId}")
+	public @ResponseBody CMRespDto<?> deleteLoves(@PathVariable Integer id, @PathVariable Integer lovesId){
+		boardsService.좋아요취소(lovesId);
+		return new CMRespDto<>(1, "좋아요 취소 성공", null);
+	}
+	
 	//게시글 목록 보기
 	@GetMapping({"/","/boards"})
 	public String getBoards(Model model,Integer page, String keyword) {

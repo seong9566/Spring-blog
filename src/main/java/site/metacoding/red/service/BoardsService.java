@@ -1,12 +1,13 @@
 package site.metacoding.red.service;
 
-import java.util.List;
-
+import java.util.List;import org.apache.ibatis.plugin.Intercepts;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import site.metacoding.red.domain.boards.Boards;
 import site.metacoding.red.domain.boards.BoardsDao;
+import site.metacoding.red.domain.loves.Loves;
+import site.metacoding.red.domain.loves.LovesDao;
 import site.metacoding.red.domain.users.Users;
 import site.metacoding.red.domain.users.UsersDao;
 import site.metacoding.red.web.dto.request.boards.UpdateDto;
@@ -20,6 +21,15 @@ public class BoardsService {
 	
 	private final BoardsDao boardsDao;
 	private final UsersDao usersDao;
+	private final LovesDao lovesDao;
+	
+	public Loves 좋아요(Loves loves) {
+		lovesDao.insert(loves);
+		return loves; // 삭제 할 때 PK키가 필요하다 그러므로 Loves리턴 필요함.
+	}
+	public void 좋아요취소(Integer lovesId) {
+		lovesDao.deleteById(lovesId);
+	}
 	
 	public PagingDto 게시글목록보기(Integer page, String keyword) {
 		if (page == null) {
