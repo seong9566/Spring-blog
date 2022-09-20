@@ -14,31 +14,8 @@
 	</form>
 </div>
 
-<script >
-	$("#btnSave").click(()=>{
-		save();
-	});
-	
-	
-	function save(){
-		let data = {
-				title: $("#title").val(),
-				content: $("#content").val(),
-			};
-		
-			$.ajax("/s/boards", {
-				type: "POST",
-				dataType: "JSON",
-				data: JSON.stringify(data),
-				headers: { 
-					"Content-Type": "application/json"
-				}
-			}).done((res) => {
-				if (res.code == 1) {
-					location.href = "/";
-				}
-			});
-	}
+<script src = "/js/boards.js">
+
 </script>
    <script>
       $('#content').summernote({

@@ -21,7 +21,7 @@ $("#btnJoin").click(() => {
 
 //유저네임 중복체크 
 $("#btnUserNameSameCheck").click(() => {
-	checkUsername();
+	checkUserName();
 });
 
 // 로그인
