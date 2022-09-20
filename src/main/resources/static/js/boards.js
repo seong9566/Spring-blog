@@ -33,7 +33,7 @@ function save() {
 		content: $("#content").val(),
 	};
 
-	$.ajax("/s/boards", {
+	$.ajax("/s/api/boards", {
 		type: "POST",
 		dataType: "JSON",
 		data: JSON.stringify(data),
@@ -53,7 +53,7 @@ function deleteBoard() {
 	let page = $("#page").val();
 	let keyword = $("#keyword").val();
 
-	$.ajax("/s/boards/" + id, {
+	$.ajax("/s/api/boards/" + id, {
 		type: "DELETE",
 		dataType: "json"
 	}).done((res) => {
@@ -75,7 +75,7 @@ function updateBoard() {
 	};
 
 
-	$.ajax("/s/boards/" + id, {
+	$.ajax("/s/api/boards/" + id, {
 		type: "PUT",
 		dataType: "json",
 		data: JSON.stringify(data),
@@ -118,7 +118,7 @@ function clickLove() {
 function insertLove() {
 	let id = $("#id").val();
 
-	$.ajax("/s/boards/" + id + "/loves", {
+	$.ajax("/s/api/boards/" + id + "/loves", {
 		type: "POST",
 		dataType: "json"
 	}).done((res) => {
@@ -130,7 +130,7 @@ function insertLove() {
 			$("#lovesId").val(res.data.id);
 			//console.log(res);
 		} else {
-			alert("좋아요 실패했습니다");
+			alert(res.msg);
 		}
 	});
 }
@@ -139,7 +139,7 @@ function deleteLove() {
 	let id = $("#id").val();
 	let lovesId = $("#lovesId").val();
 
-	$.ajax("/s/boards/" + id + "/loves/" + lovesId, {
+	$.ajax("/s/api/boards/" + id + "/loves/" + lovesId, {
 		type: "DELETE",
 		dataType: "json"
 	}).done((res) => {

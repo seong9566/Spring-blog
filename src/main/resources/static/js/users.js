@@ -56,7 +56,7 @@ function join(){
 		password: $("#password").val(),
 		email: $("#email").val()
 	};
-	$.ajax("/join", {
+	$.ajax("/api/join", {
 		type: "POST",
 		dataType: "JSON",
 		data: JSON.stringify(data),
@@ -87,7 +87,7 @@ function checkPassword(){
 // 유저 네임 중복 체크 
 function checkUserName(){
 		let username = $("#username").val();
-	$.ajax(`users/usernameSameCheck?username=${username}`, {// JS이므로 백틱 사용 가능  
+	$.ajax(`/api/users/usernameSameCheck?username=${username}`, {// JS이므로 백틱 사용 가능  
 		type: "GET",
 		dataType: "json", 
 		async: true 
@@ -117,7 +117,7 @@ function login(){
 		remember: $("#remember").prop("checked")
 	};
 
-	$.ajax("/login", {
+	$.ajax("/api/login", {
 		type: "POST",
 		dataType: "JSON",
 		data: JSON.stringify(data),
@@ -138,7 +138,7 @@ function login(){
 function resign(){
 	let id = $("#id").val();
 
-	$.ajax("/s/users/" + id, {
+	$.ajax("/s/api/users/" + id, {
 		type: "DELETE",
 		dataType: "json"
 	}).done((res) => {
@@ -161,7 +161,7 @@ function update(){
 
 	let id = $("#id").val();
 
-	$.ajax("/s/users/" + id, {
+	$.ajax("/s/api/users/" + id, {
 		type: "PUT",
 		dataType: "json", 
 		data: JSON.stringify(data),

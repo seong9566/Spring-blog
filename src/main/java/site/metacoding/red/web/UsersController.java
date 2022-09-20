@@ -34,7 +34,7 @@ public class UsersController {
 	private final UsersService usersService;
 
 	//http://localhost:8000/users/usernameSameCheck?username=ssar
-	@GetMapping("users/usernameSameCheck")
+	@GetMapping("/api/users/usernameSameCheck")
 	// ResponseBody는 데이터를 리턴 하기때문에 붙여줌.
 	public @ResponseBody CMRespDto<Boolean> usernameSaneCheck(String username) {
 		// 현재 리턴 타입 boolean
@@ -66,13 +66,13 @@ public class UsersController {
 		return "users/loginForm";
 	}
 
-	@PostMapping("/join")
+	@PostMapping("/api/join")
 	public @ResponseBody CMRespDto<?> join(@RequestBody JoinDto joinDto) {// @RequestBody : Dto를 JSON으로 받기 위함 
 		usersService.회원가입(joinDto);
 		return new CMRespDto<>(1,"회원가입 성공",null);// 회원가입이 되면 로그인 폼으로 이동
 	}
 	
-	@PostMapping("/login")
+	@PostMapping("/api/login")
 	public @ResponseBody CMRespDto<?> login(@RequestBody LoginDto loginDto,HttpServletResponse response ) {
 		
 //		System.out.println("====================");
@@ -112,7 +112,7 @@ public class UsersController {
 	}
 	
 	// 인증 필요 
-	@PutMapping("/s/users/{id}")
+	@PutMapping("/s/api/users/{id}")
 	public @ResponseBody CMRespDto<?> update(@PathVariable Integer id, @RequestBody UpdateDto updateDto) {
 		Users usersPS = usersService.회원수정(id, updateDto);
 		session.setAttribute("principal", usersPS);// 세션 동기화 
@@ -121,7 +121,7 @@ public class UsersController {
 	
 	// 인증 필요 
 	// 회원 탈퇴는 updateForm 아래에 버튼을 만들기 
-	@DeleteMapping("/s/users/{id}")
+	@DeleteMapping("/s/api/users/{id}")
 	public @ResponseBody CMRespDto<?> delete(@PathVariable Integer id,HttpServletResponse response) {
 		usersService.회원탈퇴(id);
 		session.invalidate(); // 세션 초기화 
