@@ -32,7 +32,6 @@ import site.metacoding.red.web.dto.response.CMRespDto;
 public class UsersController {
 	private final HttpSession session;
 	private final UsersService usersService;
-	private final UsersDao usersDao;
 
 	//http://localhost:8000/users/usernameSameCheck?username=ssar
 	@GetMapping("users/usernameSameCheck")
@@ -103,7 +102,8 @@ public class UsersController {
 		return new CMRespDto<>(1, "로그인 성공", null);
 	}
 	
-	@GetMapping("/users/{id}")
+	//인증 필요 -> 인터셉터 
+	@GetMapping("/s/users/{id}")
 	public String updateForm(@PathVariable Integer id,Model model) {
 		// 페이지를 줄 때는 업데이트가 처음에 select 를 해주기 때문에 model 필요
 		Users usersPS = usersService.회원정보보기(id);
@@ -111,16 +111,18 @@ public class UsersController {
 		return "users/updateForm";
 	}
 	
-	@PutMapping("/users/{id}")
+	// 인증 필요 
+	@PutMapping("/s/users/{id}")
 	public @ResponseBody CMRespDto<?> update(@PathVariable Integer id, @RequestBody UpdateDto updateDto) {
 		Users usersPS = usersService.회원수정(id, updateDto);
 		session.setAttribute("principal", usersPS);// 세션 동기화 
 		return new CMRespDto<>(1, "회원 수정 성공", null);
 	}
 	
+	// 인증 필요 
 	// 회원 탈퇴는 updateForm 아래에 버튼을 만들기 
-	@DeleteMapping("/users/{id}")
-	public @ResponseBody CMRespDto<?> delete(@PathVariable Integer id) {
+	@DeleteMapping("/s/users/{id}")
+	public @ResponseBody CMRespDto<?> delete(@PathVariable Integer id,HttpServletResponse response) {
 		usersService.회원탈퇴(id);
 		session.invalidate(); // 세션 초기화 
 		return new CMRespDto<>(1, "회원 탈퇴 성공", null);

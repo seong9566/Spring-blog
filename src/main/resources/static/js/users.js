@@ -138,7 +138,7 @@ function login(){
 function resign(){
 	let id = $("#id").val();
 
-	$.ajax("/users/" + id, {
+	$.ajax("/s/users/" + id, {
 		type: "DELETE",
 		dataType: "json"
 	}).done((res) => {
@@ -161,7 +161,7 @@ function update(){
 
 	let id = $("#id").val();
 
-	$.ajax("/users/" + id, {
+	$.ajax("/s/users/" + id, {
 		type: "PUT",
 		dataType: "json", 
 		data: JSON.stringify(data),

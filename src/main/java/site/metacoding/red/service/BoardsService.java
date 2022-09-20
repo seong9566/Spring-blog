@@ -65,7 +65,10 @@ public class BoardsService {
 
 	public void 게시글삭제하기(Integer id) {
 		// 아이디 정보 가져와야함-> 영속
-		Boards boardPS = boardsDao.findById(id);
+		Boards boardsPS = boardsDao.findById(id);
+		if(boardsPS == null) {
+			// 이 부분은 나중에 처리!! (exception 처리하는 법 따로 배울 예정)
+		}
 		boardsDao.deleteById(id);
 	}
 

@@ -20,7 +20,7 @@ function deleteBoard(){
 		let page = $("#page").val();
 		let keyword = $("#keyword").val();
 		
-	$.ajax("/boards/" + id, {
+	$.ajax("/s/boards/" + id, {
 		type: "DELETE",
 		dataType: "json"
 	}).done((res) => {
@@ -32,6 +32,7 @@ function deleteBoard(){
 		}
 	});
 }
+
 function updateBoard(){
 		let id = $("#id").val();
 
@@ -41,7 +42,7 @@ function updateBoard(){
 	};
 
 
-	$.ajax("/boards/" + id, {
+	$.ajax("/s/boards/" + id, {
 		type: "PUT",
 		dataType: "json",
 		data: JSON.stringify(data),

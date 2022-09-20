@@ -8,7 +8,7 @@
 		<input id="id" type="hidden" value="${detailDto.id}" />
 		<input id = "lovesId" type="hidden" value="${detailDto.lovesId }"/>
 			<form>
-				<a href="/boards/${detailDto.id}/updateForm" class="btn btn-warning">수정하러가기</a>
+				<a href="/s/boards/${detailDto.id}/updateForm" class="btn btn-warning">수정하러가기</a>
 			</form>
 			<form>
 				<button id ="btnDelete" type="button"class="btn btn-outline-danger">삭제</button>
@@ -26,28 +26,6 @@
 </div>
 <script>
 
-$("#btnDelete").click(()=>{
-	deleteById();
-});
-
-function deleteById(){
-	let id = $("#id").val();
-	
-	let page = $("#page").val();
-	let keyword = $("#keyword").val();
-	
-	$.ajax("/boards/" + id, {
-		type: "DELETE",
-		dataType: "json" // 응답 데이터
-	}).done((res) => {
-		if (res.code == 1) {
-			//location.href = document.referrer;
-			location.href = "/?page="+page+"&keyword="+keyword;  //  /?page=?&keyword=?
-		} else {
-			alert("글삭제 실패");
-		}
-	});
-}
 
 // 하트 아이콘을 클릭했을때의 로직
 $("#iconLove").click(()=>{
@@ -63,7 +41,7 @@ $("#iconLove").click(()=>{
 function insertLove(){
 	let id = $("#id").val();
 	
-	$.ajax("/boards/"+id+"/loves", {
+	$.ajax("/s/boards/"+id+"/loves", {
 		type: "POST",
 		dataType: "json"
 	}).done((res) => {
@@ -85,7 +63,7 @@ function deleteLove(){
       let id = $("#id").val();
       let lovesId = $("#lovesId").val();
       
-      $.ajax("/boards/"+id+"/loves/"+lovesId, {
+      $.ajax("/s/boards/"+id+"/loves/"+lovesId, {
          type: "DELETE",
          dataType: "json"
       }).done((res) => {
