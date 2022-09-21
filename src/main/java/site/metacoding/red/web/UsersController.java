@@ -1,12 +1,19 @@
 package site.metacoding.red.web;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -64,12 +71,16 @@ public class UsersController {
 	}
 
 	@PostMapping("/api/join")
-	public @ResponseBody CMRespDto<?> join(@RequestBody JoinDto joinDto) {// @RequestBody : Dto를 JSON으로 받기 위함 
-		if(joinDto.getUsername().length() > 20) {
-			throw new MyApiException("username 20자 미만으로 작성 해주세요");
+	public @ResponseBody CMRespDto<?> join(@RequestBody @Valid JoinDto joinDto,BindingResult bindingResult) {// @RequestBody : Dto를 JSON으로 받기 위함 
+		
+		if(bindingResult.hasErrors()) {
+			System.out.println("에러가 있습니다.");
+			FieldError fe = bindingResult.getFieldError();
+			throw new MyApiException(fe.getDefaultMessage());
 		}
-		
-		
+		else {
+			System.out.println("에러가 없습니다.");
+		}
 		usersService.회원가입(joinDto);
 		return new CMRespDto<>(1,"회원가입 성공",null);// 회원가입이 되면 로그인 폼으로 이동
 	}

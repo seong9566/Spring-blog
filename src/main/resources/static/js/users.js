@@ -118,7 +118,7 @@ function spacePassword() {
 // 패스워드 한글 체크 
 function koreanCheckPassword() {
 	let password = $("#password").val();
-	let korRule = /^[가-힣]*$/;
+	let korRule =  /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
 	if (korRule.test(password)) {
 		return true;
 	} else {
@@ -142,18 +142,18 @@ function join() {
 		alert("username에 대문자 하나이상을 입력하세요.");
 		return;
 	}
-	
-	if (spacePassword() == true || koreanCheckPassword()== true) {
+
+	if (spacePassword() == true || koreanCheckPassword() == true) {
 		alert("비밀번호에 공백이나 한글을 넣지마세요 .");
 		return;
 	}
-	
+
 	if (isPasswordCheck == false) {
 		alert("비밀번호 체크를 진행 해주세요.");
 		return;
 	}
-	
-	if (emailCheck() == false || spaceEmail() == true || koreanCheckEmail()== true) {
+
+	if (emailCheck() == false || spaceEmail() == true || koreanCheckEmail() == true) {
 		alert("이메일형식이 올바르지 않습니다.");
 		return;
 	}
@@ -174,6 +174,10 @@ function join() {
 	}).done((res) => {
 		if (res.code == 1) {
 			location.href = "/loginForm";
+		}
+		else {
+			alert(res.msg);
+			history.back;
 		}
 	});
 }
