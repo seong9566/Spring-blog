@@ -2,6 +2,8 @@ package site.metacoding.red.service;
 
 import java.util.List;
 
+import javax.management.RuntimeErrorException;
+
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -10,12 +12,12 @@ import site.metacoding.red.domain.boards.BoardsDao;
 import site.metacoding.red.domain.loves.Loves;
 import site.metacoding.red.domain.loves.LovesDao;
 import site.metacoding.red.domain.users.Users;
+import site.metacoding.red.handler.ex.MyException;
 import site.metacoding.red.web.dto.request.boards.UpdateDto;
 import site.metacoding.red.web.dto.request.boards.WriteDto;
 import site.metacoding.red.web.dto.response.boards.DetailDto;
 import site.metacoding.red.web.dto.response.boards.MainDto;
 import site.metacoding.red.web.dto.response.boards.PagingDto;
-import site.metacoding.red.web.dto.response.loves.LovesDto;
 
 @RequiredArgsConstructor
 @Service
@@ -56,6 +58,10 @@ public class BoardsService {
 		// 1. 영속화
 		Boards boardsPS = boardsDao.findById(id);
 
+		if(boardsPS == null) {
+			// 익셉션 처리 
+			throw new RuntimeException(id+"의 게시글을 찾을 수 없습니다.");
+		}
 		// 2. 데이터업데이트
 		boardsPS.update(updateDto);
 
@@ -76,6 +82,10 @@ public class BoardsService {
 		boardsDao.insert(writeDto.toEntity(principal.getId()));
 	}
 	public Boards 게시글수정화면데이터가져오기(Integer id) {
-		return boardsDao.findById(id);
+		Boards boards = boardsDao.findById(id);
+		if(boards == null) {
+			throw new MyException(id+"게시글을 찾을 수 없습니다.");
+		}
+		return boards;
 	}
 }

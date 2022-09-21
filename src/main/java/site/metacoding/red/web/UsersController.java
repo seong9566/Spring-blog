@@ -1,7 +1,5 @@
 package site.metacoding.red.web;
 
-import java.net.http.HttpRequest;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,9 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 import site.metacoding.red.domain.users.Users;
-import site.metacoding.red.domain.users.UsersDao;
+import site.metacoding.red.handler.ex.MyApiException;
 import site.metacoding.red.service.UsersService;
-import site.metacoding.red.util.Script;
 import site.metacoding.red.web.dto.request.users.JoinDto;
 import site.metacoding.red.web.dto.request.users.LoginDto;
 import site.metacoding.red.web.dto.request.users.UpdateDto;
@@ -68,6 +65,11 @@ public class UsersController {
 
 	@PostMapping("/api/join")
 	public @ResponseBody CMRespDto<?> join(@RequestBody JoinDto joinDto) {// @RequestBody : Dto를 JSON으로 받기 위함 
+		if(joinDto.getUsername().length() > 20) {
+			throw new MyApiException("username 20자 미만으로 작성 해주세요");
+		}
+		
+		
 		usersService.회원가입(joinDto);
 		return new CMRespDto<>(1,"회원가입 성공",null);// 회원가입이 되면 로그인 폼으로 이동
 	}

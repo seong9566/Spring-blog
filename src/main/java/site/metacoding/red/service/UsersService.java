@@ -21,7 +21,8 @@ public class UsersService {
 		// 클라이언트가 Dto를 요청 -> Service에서 Entity로 바꾸어 수행
 		// 1. Dto를 엔티티로 변경하는 코드
 		// 2. 엔티티로 insert 
-		usersDao.join(joinDto.toEntity());
+		Users users = joinDto.toEntity();
+		usersDao.join(users);
 	}
 	
 	public Users 로그인(LoginDto loginDto) {// Dto username, password
